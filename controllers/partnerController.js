@@ -4,7 +4,7 @@ const multer = require("multer");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "controllers/images/");
+    cb(null, __dirname);
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname);
@@ -27,9 +27,7 @@ exports.partnerCreateController2 = async (req, res) => {
       console.log("The file object...");
       console.log(req.file.filename);
 
-      var img = fs.readFileSync(
-        path.join(__dirname + "/images/" + req.file.filename)
-      );
+      var img = fs.readFileSync(path.join(__dirname + "/" + req.file.filename));
 
       var obj = {
         partnername: " ",
@@ -50,7 +48,7 @@ exports.partnerCreateController2 = async (req, res) => {
         });
       });
 
-      fs.unlinkSync(path.join(__dirname + "/images/" + req.file.filename));
+      fs.unlinkSync(path.join(__dirname + "/" + req.file.filename));
     });
   } catch (error) {
     console.log(error);
