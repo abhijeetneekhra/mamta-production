@@ -5,6 +5,7 @@ const colors = require("colors");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const path = require("path");
+var bodyParser = require("body-parser");
 
 //.env config
 dotenv.config();
@@ -16,6 +17,7 @@ const studentRoutes = require("./routes/studentRoutes");
 const schoolRoutes = require("./routes/schoolRoutes");
 const scoreRoutes = require("./routes/scoreRoutes");
 const rankRoutes = require("./routes/rankRoutes");
+const partnerRoutes = require("./routes/partnerRoutes");
 
 //mongodb connection
 connectDB();
@@ -28,6 +30,9 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 //routes
 app.use("/api/v1/state", stateRoutes);
 app.use("/api/v1/district", districtRoutes);
@@ -35,6 +40,7 @@ app.use("/api/v1/student", studentRoutes);
 app.use("/api/v1/school", schoolRoutes);
 app.use("/api/v1/score", scoreRoutes);
 app.use("/api/v1/rank", rankRoutes);
+app.use("/api/v1/partner", partnerRoutes);
 
 //static files
 app.use(express.static(path.join(__dirname, "./client/build")));
